@@ -68,6 +68,7 @@ export function updateCartQuantity() {
     });
 
 
+
     document.querySelector(".js-cart-quantity").innerHTML = (cartQuantity === 0) ? "" : cartQuantity;
 
 }

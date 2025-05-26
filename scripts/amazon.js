@@ -4,7 +4,7 @@ import { formatCurrency } from "./utils/money.js";
 
 let productHTML = "";
 products.forEach((product) => {
-    productHTML += `<div class="product-container">
+  productHTML += `<div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -16,14 +16,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src="${product.getStarsUrl()}">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -56,28 +56,23 @@ products.forEach((product) => {
 `;
 });
 
-console.log(productHTML);
 document.querySelector(".js-products-grid").innerHTML = productHTML;
-
 
 // Update the cart quantity in the header
 export function updateCartQuantity() {
-    let cartQuantity = 0;
-    cart.forEach((cartItem) => {
-        cartQuantity += cartItem.quantity;
-    });
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
 
-
-
-    document.querySelector(".js-cart-quantity").innerHTML = (cartQuantity === 0) ? "" : cartQuantity;
-
+  document.querySelector(".js-cart-quantity").innerHTML =
+    cartQuantity === 0 ? "" : cartQuantity;
 }
 updateCartQuantity();
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
-    button.addEventListener("click", () => {
-        const productId = button.dataset.productId;
-        addToCart(productId);
-        updateCartQuantity();
-
-    });
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
+    addToCart(productId);
+    updateCartQuantity();
+  });
 });
